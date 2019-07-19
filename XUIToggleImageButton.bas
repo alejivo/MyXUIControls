@@ -80,7 +80,11 @@ Private Sub BottomAndCenter
 	
 	'inizialize and load the icon object
 	Dim tempFileName As String
-	If PressedState = False Then tempFileName = ImageFileName Else tempFileName = PressedFileName
+	If PressedState = False Then
+		tempFileName = ImageFileName
+	Else
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If tempFileName <> "" Then
 		imgIcon.Height = cmdButton.Height-Margin*2-lblButton.Height-LabelMargin
@@ -118,7 +122,11 @@ Private Sub CenterAllContent
 	
 	'inizialize and load the icon object
 	Dim tempFileName As String
-	If PressedState = False Then tempFileName = ImageFileName Else tempFileName = PressedFileName
+	If PressedState = False Then 
+		tempFileName = ImageFileName 
+	Else 
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If tempFileName <> "" Then
 		imgIcon.Height = cmdButton.Height-Margin*2
@@ -162,7 +170,11 @@ Private Sub LeftAllContent
 	
 	'inizialize and load the icon object
 	Dim tempFileName As String
-	If PressedState = False Then tempFileName = ImageFileName Else tempFileName = PressedFileName
+	If PressedState = False Then
+		tempFileName = ImageFileName
+	Else
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If tempFileName <> "" Then
 		imgIcon.Height = cmdButton.Height-Margin*2
