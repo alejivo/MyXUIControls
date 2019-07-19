@@ -335,7 +335,8 @@ public static void initializeProcessGlobals() {
     if (main.processGlobalsRun == false) {
 	    main.processGlobalsRun = true;
 		try {
-		        		
+		        b4a.example.dateutils._process_globals();
+		
         } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -370,7 +371,7 @@ public static void killProgram() {
 BA.applicationContext.stopService(new android.content.Intent(BA.applicationContext, starter.class));
 }
 public anywheresoftware.b4a.keywords.Common __c = null;
-public b4a.MyXUIControls.xuiimagebutton _xuiimagebutton1 = null;
+public b4a.example.dateutils _dateutils = null;
 public b4a.MyXUIControls.starter _starter = null;
 public static String  _activity_create(boolean _firsttime) throws Exception{
 RDebugUtils.currentModule="main";
@@ -381,8 +382,8 @@ RDebugUtils.currentLine=131072;
 RDebugUtils.currentLine=131074;
  //BA.debugLineNum = 131074;BA.debugLine="Activity.LoadLayout(\"button\")";
 mostCurrent._activity.LoadLayout("button",mostCurrent.activityBA);
-RDebugUtils.currentLine=131076;
- //BA.debugLineNum = 131076;BA.debugLine="End Sub";
+RDebugUtils.currentLine=131075;
+ //BA.debugLineNum = 131075;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
@@ -401,19 +402,6 @@ RDebugUtils.currentLine=196608;
  //BA.debugLineNum = 196608;BA.debugLine="Sub Activity_Resume";
 RDebugUtils.currentLine=196610;
  //BA.debugLineNum = 196610;BA.debugLine="End Sub";
-return "";
-}
-public static String  _xuiimagebutton1_click() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "xuiimagebutton1_click", false))
-	 {return ((String) Debug.delegate(mostCurrent.activityBA, "xuiimagebutton1_click", null));}
-RDebugUtils.currentLine=327680;
- //BA.debugLineNum = 327680;BA.debugLine="Sub XUIImageButton1_Click";
-RDebugUtils.currentLine=327681;
- //BA.debugLineNum = 327681;BA.debugLine="Log(\"clicked\")";
-anywheresoftware.b4a.keywords.Common.LogImpl("0327681","clicked",0);
-RDebugUtils.currentLine=327682;
- //BA.debugLineNum = 327682;BA.debugLine="End Sub";
 return "";
 }
 }

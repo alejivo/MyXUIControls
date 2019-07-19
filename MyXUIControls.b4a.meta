@@ -7,6 +7,6 @@ ModuleBreakpoints2=
 ModuleClosedNodes0=
 ModuleClosedNodes1=
 ModuleClosedNodes2=
-NavigationStack=XUIImageButton,CenterAllContent,64,0,Main,XUIImageButton1_Click,42,0,Main,Globals,25,0
+NavigationStack=Main,Activity_Create,29,6,XUIImageButton,CenterAllContent,46,0,XUIImageButton,MeasureTextWidth,186,0,XUIImageButton,LoadProps,225,0,XUIImageButton,CreateLabel,225,6,XUIImageButton,MeasureTextHeight,188,2,XUIImageButton,LeftAllContent,160,0,Diseñador Visual,button.bal,-100,6,XUIImageButton,BottomAndCenter,66,6,XUIImageButton,DesignerCreateView,31,6
 SelectedBuild=0
 VisibleModules=1,2

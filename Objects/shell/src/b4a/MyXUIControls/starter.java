@@ -46,8 +46,9 @@ public boolean isSingleton() {
 		return pcBA;
 	}
 public static RemoteObject __c = RemoteObject.declareNull("anywheresoftware.b4a.keywords.Common");
+public static RemoteObject _dateutils = RemoteObject.declareNull("b4a.example.dateutils");
 public static b4a.MyXUIControls.main _main = null;
   public Object[] GetGlobals() {
-		return new Object[] {"Main",Debug.moduleToString(b4a.MyXUIControls.main.class),"Service",starter.mostCurrent._service};
+		return new Object[] {"DateUtils",starter.mostCurrent._dateutils,"Main",Debug.moduleToString(b4a.MyXUIControls.main.class),"Service",starter.mostCurrent._service};
 }
 }

@@ -11,7 +11,7 @@ Version=9.3
 #DesignerProperty: Key: ImageFileName, DisplayName: Image File Name, FieldType: String, DefaultValue: , Description: Set the image filename to be loaded as icon.
 #DesignerProperty: Key: BaseColor, DisplayName: Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color.
 #DesignerProperty: Key: PressedColor, DisplayName: Press Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color when the user press the button.
-#DesignerProperty: Key: Aligment, DisplayName:  Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER
+#DesignerProperty: Key: Aligment, DisplayName:  Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|BOTTOM
 #DesignerProperty: Key: TextAligment, DisplayName:  Text Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|RIGHT
 #DesignerProperty: Key: PressDelay, DisplayName: Press Delay, FieldType: Int, DefaultValue: 500, Description: Time (on miliseconds) betwen the pressed color and back to base color.
 
@@ -38,12 +38,59 @@ End Sub
 Public Sub DesignerCreateView (Base As Object, Lbl As Label, Props As Map)
 	mBase = Base
 	LoadProps(Props) 'load propertys
-	If Aligment.Trim = "CENTER" Then
-		CenterAllContent(Lbl)
-	Else
-		LeftAllContent(Lbl)
-	End If
+	Select Aligment.Trim
+		Case "CENTER"
+			CenterAllContent(Lbl)
+		Case "BOTTOM"
+			BottomAndCenter(Lbl)
+		Case Else
+			LeftAllContent(Lbl)
+	End Select
 End Sub
+
+'This function fit the icon top the label
+'Its dont use LeftMargin
+Private Sub BottomAndCenter(lbl As Label)
+	'inizialize the base object
+	cmdButton = objXUI.CreatePanel("cmdButton")
+	cmdButton.Height = mBase.Height
+	cmdButton.Width = mBase.Width
+	
+	'create label
+	lblButton = CreateLabel("lblButton", lbl)
+	lblButton.Width = cmdButton.Width-Margin*2
+	lblButton.Height = mBase.Height
+	lblButton.Height = MeasureTextHeight(lblButton.Text, lblButton.Font) 'fit to the selected font
+	lblButton.SetTextAlignment("CENTER", TextAligment)
+	'lblButton.SetColorAndBorder(objXUI.Color_Green,2dip,objXUI.Color_Red,10dip)
+	
+	'inizialize and load the icon object
+	imgIcon = CreateImageView("imgIcon")
+	If ImageFileName <> "" Then
+		imgIcon.Height = cmdButton.Height-Margin*2-lblButton.Height-LabelMargin
+		imgIcon.Width = cmdButton.Height-Margin*2-lblButton.Height-LabelMargin
+		Dim image As Bitmap = LoadBitmap(File.DirAssets,ImageFileName)
+		imgIcon.SetBitmap(image.Resize(imgIcon.Width, imgIcon.Height, True)) 'fit on the box
+	Else
+		imgIcon.Height = 0
+		imgIcon.Width = 0
+	End If
+	
+	
+	'calculate the center startposition
+	Dim LabelStartPoint As Int = (cmdButton.Width-lblButton.Width)/2
+	Dim ImageStartPoint As Int = (cmdButton.Width-imgIcon.Width)/2
+	
+	
+	'load an positionate icons
+	cmdButton.AddView(imgIcon, ImageStartPoint,Margin, imgIcon.Width, imgIcon.Height)
+	cmdButton.AddView(lblButton,LabelStartPoint, imgIcon.Height+LabelMargin, lblButton.Width,lblButton.Height*2)
+	
+	'ad the button to the base view
+	mBase.AddView(cmdButton,0dip,0dip,mBase.Width,mBase.Height)
+	mBase.Color = objXUI.PaintOrColorToColor(BaseColor)
+End Sub
+
 
 'This function fit all the content at center
 'Its dont use LeftMargin
@@ -144,6 +191,27 @@ Private Sub MeasureTextWidth(Text As String, Font1 As B4XFont) As Int
 #End If
 End Sub
 
+Private Sub MeasureTextHeight(Text As String, Font1 As B4XFont) As Int
+#If B4A
+	Private bmp As Bitmap
+	bmp.InitializeMutable(2dip, 2dip)
+	Private cvs As Canvas
+	cvs.Initialize2(bmp)
+	Return cvs.MeasureStringHeight(Text, Font1.ToNativeFont, Font1.Size)
+#Else If B4i
+    Return Text.MeasureStringHeight(Font1.ToNativeFont)
+#Else If B4J
+    Dim jo As JavaObject
+    jo.InitializeNewInstance("javafx.scene.text.Text", Array(Text))
+    jo.RunMethod("setFont",Array(Font1.ToNativeFont))
+    jo.RunMethod("setLineSpacing",Array(0.0))
+    jo.RunMethod("setWrappingWidth",Array(0.0))
+    Dim Bounds As JavaObject = jo.RunMethod("getLayoutBounds",Null)
+    Return Bounds.RunMethod("getHeight",Null)
+#End If
+End Sub
+
+
 'Loads all properties in to the variables
 Public Sub LoadProps(Props As Map)
 	Margin = Props.Get("Margin")
@@ -160,12 +228,13 @@ End Sub
 Private Sub CreateLabel(EventName As String, Lbl As Label) As B4XView
 	Dim tmp_lbl As Label
 	tmp_lbl.Initialize(EventName)
+#If B4A
 	tmp_lbl.SingleLine = True
-	#if b4a
+	tmp_lbl.TextSize = Lbl.TextSize
 	tmp_lbl.Typeface = Lbl.Typeface
 	tmp_lbl.Text = Lbl.Text
 	tmp_lbl.TextColor = Lbl.TextColor
-	#End If
+#End If
 	Return tmp_lbl
 End Sub
 
