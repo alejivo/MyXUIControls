@@ -1,8 +1,10 @@
 ﻿Build1=Default,b4a.MyXUIControls
 File1=bar-chart.png
 File2=button.bal
+File3=group.png
 FileGroup1=Default Group
 FileGroup2=Default Group
+FileGroup3=Default Group
 Group=Default Group
 IconFile=
 Library1=core
@@ -11,10 +13,11 @@ Library3=stringutils
 Library4=xui views
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="26"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~'End of default text.~\n~
 Module1=Starter
-Module2=XUIImageButton
-NumberOfFiles=2
+Module2=XUIImageButon
+Module3=XUIToggleImageButon
+NumberOfFiles=3
 NumberOfLibraries=4
-NumberOfModules=2
+NumberOfModules=3
 Version=9.3
 @EndOfDesignText@
 #Region  Project Attributes 
