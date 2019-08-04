@@ -1,10 +1,18 @@
 ﻿Build1=Default,b4a.MyXUIControls
 File1=bar-chart.png
 File2=button.bal
-File3=group.png
+File3=button2.bal
+File4=check.png
+File5=group.png
+File6=label1.bal
+File7=plus.png
 FileGroup1=Default Group
 FileGroup2=Default Group
 FileGroup3=Default Group
+FileGroup4=Nuevo Grupo
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Nuevo Grupo
 Group=Default Group
 IconFile=
 Library1=core
@@ -13,11 +21,12 @@ Library3=stringutils
 Library4=xui views
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="26"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~'End of default text.~\n~
 Module1=Starter
-Module2=XUIToggleImageButton
-Module3=XUIImageButton
-NumberOfFiles=3
+Module2=XUIImageButton
+Module3=XUIToggleImageButton
+Module4=XUIAutoresizeLabel
+NumberOfFiles=7
 NumberOfLibraries=4
-NumberOfModules=3
+NumberOfModules=4
 Version=9.3
 @EndOfDesignText@
 #Region  Project Attributes 
@@ -43,11 +52,13 @@ End Sub
 Sub Globals
 	'These global variables will be redeclared each time the activity is created.
 	'These variables can only be accessed from this module.
+	'Private Panel1 As Panel
+	Private xui As XUI
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
 	'Do not forget to load the layout file created with the visual designer. For example:
-	Activity.LoadLayout("button")
+	Activity.LoadLayout("label1")
 End Sub
 
 Sub Activity_Resume
@@ -57,6 +68,5 @@ End Sub
 Sub Activity_Pause (UserClosed As Boolean)
 
 End Sub
-
 
 
