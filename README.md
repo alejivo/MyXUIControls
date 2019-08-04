@@ -2,17 +2,19 @@
 XUI Controls (b4a, b4i, b4j) - Tested on an old android 4.4 500mb phone with great performance.
 
 ![GUI SCREENSHOT](https://raw.githubusercontent.com/alejandrojavierm/MyXUIControls/master/ImgDoc/Sh_19-07-19A.png)
-![GUI SCREENSHOT](https://raw.githubusercontent.com/alejandrojavierm/MyXUIControls/master/ImgDoc/Sh_19-07-19B.png)
+![GUI SCREENSHOT](https://raw.githubusercontent.com/alejandrojavierm/MyXUIControls/master/ImgDoc/XUIImgButton-04-08-2019.png)
+![GUI SCREENSHOT](https://raw.githubusercontent.com/alejandrojavierm/MyXUIControls/master/ImgDoc/XUILabel-04-08-2019.png)
 
 # Controls
 * XUIImageButton
 * XUIImageToggleButton
+* XUIAutoresizeLabel
 
 # Documentation
 
 This classes handle the label and image sizes, plus handle the spaces and margins.
 
-### Both controls haves this features:
+### XUIImageBotton and XUIImageTogleBotton controls haves this features:
 
 Image: the filename to be loaded from the resources
 
@@ -26,10 +28,16 @@ Label orientation:
 * CENTER
 * RIGHT
 
-### XUIImageBotton features:
+Events:
+* CLICK
+
+#### XUIImageBotton features:
 * Pressed Color
 * Delay from base to pressed color
-### XUIImageTogleBotton features:
+#### XUIImageTogleBotton features:
 * Pressed Color
 * IsPressed (propety)
 * PressedImageFileName: the filename of the image to be loaded from the resources when its pressed.
+
+### XUIAutoresizeLabel features:
+* Auto Resize
