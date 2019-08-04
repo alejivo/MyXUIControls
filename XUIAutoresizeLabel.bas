@@ -4,7 +4,7 @@ ModulesStructureVersion=1
 Type=Class
 Version=9.3
 @EndOfDesignText@
-#DesignerProperty: Key: AutoResize, DisplayName: Label Auto Resize, FieldType: Boolean, DefaultValue: False, Description: When this option is checked the button autoresizes the label.
+#DesignerProperty: Key: AutoResize, DisplayName: Auto Resize, FieldType: Boolean, DefaultValue: False, Description: When this option is checked the button autoresizes the label.
 #DesignerProperty: Key: TextAligment, DisplayName:  Text Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|RIGHT
 Sub Class_Globals
 	Private mEventName As String 'ignore
