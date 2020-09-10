@@ -2,11 +2,12 @@
 Group=Default Group
 ModulesStructureVersion=1
 Type=Class
-Version=9.3
+Version=10
 @EndOfDesignText@
 #DesignerProperty: Key: Padding, DisplayName: Padding, FieldType: Int, DefaultValue: 1, Description: Space between content and the border.
 #DesignerProperty: Key: AutoResize, DisplayName: Auto Resize, FieldType: Boolean, DefaultValue: False, Description: When this option is checked the button autoresizes the label.
 #DesignerProperty: Key: TextAligment, DisplayName:  Text Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|RIGHT
+#DesignerProperty: Key: , DisplayName: Auto Resize, FieldType: Boolean, DefaultValue: False, Description: When this option is checked the button autoresizes the label.
 Sub Class_Globals
 	Private mEventName As String 'ignore
 	Private mCallBack As Object 'ignore
@@ -32,7 +33,7 @@ Public Sub DesignerCreateView (Base As Object, Lbl As Label, Props As Map)
 End Sub
 
 Private Sub Base_Resize (Width As Double, Height As Double)
- 	mBase.RemoveAllViews
+	mBase.RemoveAllViews
 	AutoResizeLabel
 End Sub
 
@@ -78,7 +79,7 @@ Private Sub CheckSize(size As Float, multipleLines As Boolean) As Boolean
 			Dim tmplbl As Label = lblAutoresize
 			tmplbl.Multiline = True
 			lblAutoresize = tmplbl
-			'Return MeasureTextHeight(lblAutoresize.Text,lblAutoresize.Font) > lblAutoresize.Height
+		'Return MeasureTextHeight(lblAutoresize.Text,lblAutoresize.Font) > lblAutoresize.Height
 			Return getTextHeight(lblAutoresize.Text,lblAutoresize.Font,lblAutoresize.Width) > lblAutoresize.Height
 		#Else B4J
 			Return MeasureMultilineTextHeight(lblAutoresize.Font,lblAutoresize.Width,lblAutoresize.Text)

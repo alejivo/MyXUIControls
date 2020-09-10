@@ -12,6 +12,8 @@ Version=9.3
 #DesignerProperty: Key: PressedFileName, DisplayName: Pressed Image File, FieldType: String, DefaultValue: , Description: Set the image filename with extension to be loaded as icon when is activated.
 #DesignerProperty: Key: BaseColor, DisplayName: Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color.
 #DesignerProperty: Key: SelectedColor, DisplayName: Selected Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color when the user press the button.
+#DesignerProperty: Key: BaseTextColor, DisplayName: Base Text Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: The text color.
+#DesignerProperty: Key: SelectedTextColor, DisplayName: Selected Text Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: The text color when the button is pressed
 #DesignerProperty: Key: Aligment, DisplayName:  Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|BOTTOM
 #DesignerProperty: Key: TextAligment, DisplayName:  Text Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|RIGHT
 #DesignerProperty: Key: AutoResize, DisplayName: Label Auto Resize, FieldType: Boolean, DefaultValue: False, Description: When this option is checked the button autoresizes the label.
@@ -35,7 +37,7 @@ Sub Class_Globals
 	'properties globals
 	Private Margin,LeftMargin, LabelMargin, LineColor, LineThickness As Int
 	Private PressedFileName, ImageFileName,TextAligment, Aligment  As String
-	Private SelectedColor, BaseColor As Object
+	Private SelectedTextColor, BaseTextColor, SelectedColor, BaseColor As Object
 	Private PressedState As Boolean = False
 	Private vAutoResize,vDrawLeftLine,vDrawRightLine, vDrawTopLine, vDrawBottomLine As Boolean
 End Sub
@@ -409,6 +411,8 @@ Public Sub LoadProps(Props As Map)
 	LeftMargin = Props.Get("LeftMargin")
 	SelectedColor = Props.Get("SelectedColor")
 	BaseColor = Props.Get("BaseColor")
+	SelectedTextColor = Props.Get("SelectedTextColor")
+	BaseTextColor = Props.Get("BaseTextColor")
 	LineThickness = Props.Get("LineThickness")
 	LineColor = Props.Get("LineColor")
 	vAutoResize = Props.Get("AutoResize")
@@ -428,7 +432,7 @@ Private Sub CreateLabel(EventName As String, Lbl As Label) As B4XView
 	tmp_lbl.TextSize = Lbl.TextSize
 	tmp_lbl.Typeface = Lbl.Typeface
 	tmp_lbl.Text = Lbl.Text
-	tmp_lbl.TextColor = Lbl.TextColor
+	tmp_lbl.TextColor = BaseTextColor
 #End If
 	Return tmp_lbl
 End Sub
@@ -445,10 +449,12 @@ Private Sub cmdButton_Click
 		PressedState = False
 		PaintControl
 		mBase.Color = objXUI.PaintOrColorToColor(BaseColor)
+		lblButton.TextColor = objXUI.PaintOrColorToColor(BaseTextColor)
 	Else
 		PressedState = True
 		PaintControl
 		mBase.Color = objXUI.PaintOrColorToColor(SelectedColor)
+		lblButton.TextColor = objXUI.PaintOrColorToColor(SelectedTextColor)
 	End If
 	If SubExists(mCallBack,mEventName&"_Click") Then CallSub(mCallBack, mEventName&"_Click")
 End Sub

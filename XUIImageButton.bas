@@ -5,10 +5,11 @@ Type=Class
 Version=9.3
 @EndOfDesignText@
 #Event: Click
-#DesignerProperty: Key: Margin, DisplayName: Margin, FieldType: Int, DefaultValue: 1, Description: Space between content and the border.
+#DesignerProperty: Key: Padding, DisplayName: Padding, FieldType: Int, DefaultValue: 1, Description: Space between content and the border.
 #DesignerProperty: Key: LabelMargin, DisplayName: LabelMargin, FieldType: Int, DefaultValue: 10, Description: Space between the image and label
-#DesignerProperty: Key: LeftMargin, DisplayName: Left Margin, FieldType: Int, DefaultValue: 10, Description: Space between the left side, only on LEFT aligment.
+#DesignerProperty: Key: LeftMargin, DisplayName: Left Margin Icon, FieldType: Int, DefaultValue: 10, Description: Space between the left side, only on LEFT aligment.
 #DesignerProperty: Key: ImageFileName, DisplayName: Image File Name, FieldType: String, DefaultValue: , Description: Set the image filename to be loaded as icon.
+#DesignerProperty: Key: PressedFileName, DisplayName: Pressed File Name, FieldType: String, DefaultValue: , Description: Set the image filename displayed when the user touch the button.
 #DesignerProperty: Key: BaseColor, DisplayName: Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color.
 #DesignerProperty: Key: PressedColor, DisplayName: Press Color, FieldType: Color, DefaultValue: 0xFFFFFFFF, Description: Use to select the button color when the user press the button.
 #DesignerProperty: Key: Aligment, DisplayName:  Aligment, FieldType: String, DefaultValue: CENTER, List: LEFT|CENTER|BOTTOM
@@ -32,9 +33,10 @@ Sub Class_Globals
 	Private imgIcon As B4XView
 	Private lblButton As B4XView
 	Private cmdButton As B4XView
+	Private PressedState As Boolean 
 	'properties globals
-	Private Margin,PressDelay,LeftMargin, LabelMargin, LineThickness As Int
-	Private ImageFileName,TextAligment, Aligment  As String
+	Private Padding,PressDelay,LeftMargin, LabelMargin, LineThickness As Int
+	Private PressedFileName, ImageFileName,TextAligment, Aligment  As String
 	Private PressedColor, BaseColor, LineColor As Object
 	Private vAutoResize,vDrawLeftLine,vDrawRightLine, vDrawTopLine, vDrawBottomLine As Boolean
 End Sub
@@ -42,6 +44,7 @@ End Sub
 Public Sub Initialize (Callback As Object, EventName As String)
 	mEventName = EventName
 	mCallBack = Callback
+	PressedState = False
 End Sub
 
 'Base type must be Object
@@ -49,6 +52,12 @@ Public Sub DesignerCreateView (Base As Object, Lbl As Label, Props As Map)
 	mBase = Base
 	mLbl = Lbl
 	LoadProps(Props) 'load propertys
+	PaintControl
+End Sub
+
+'paint the control by its position
+Private Sub PaintControl
+	mBase.RemoveAllViews
 	Select Aligment.Trim
 		Case "CENTER"
 			CenterAllContent(mLbl)
@@ -168,19 +177,25 @@ Private Sub BottomAndCenter(lbl As Label)
 	
 	'create label
 	lblButton = CreateLabel("lblButton", lbl)
-	lblButton.Width = cmdButton.Width-Margin*2
+	lblButton.Width = cmdButton.Width-Padding*2
 	lblButton.Height = mBase.Height
 	lblButton.Height = MeasureTextHeight(lblButton.Text, lblButton.Font) 'fit to the selected font
 	lblButton.SetTextAlignment("CENTER", TextAligment)
 	'lblButton.SetColorAndBorder(objXUI.Color_Green,2dip,objXUI.Color_Red,10dip)
 	
 	'inizialize and load the icon object
+	Dim tempFileName As String
+	If PressedState = False Then
+		tempFileName = ImageFileName
+	Else
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If ImageFileName <> "" Then
-		imgIcon.Height = cmdButton.Height-Margin*2-lblButton.Height-LabelMargin
-		imgIcon.Width = cmdButton.Height-Margin*2-lblButton.Height-LabelMargin
+		imgIcon.Height = cmdButton.Height-Padding*2-lblButton.Height-LabelMargin
+		imgIcon.Width = cmdButton.Height-Padding*2-lblButton.Height-LabelMargin
 		'Dim image As Bitmap = LoadBitmap(File.DirAssets,ImageFileName)
-		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,ImageFileName)
+		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,tempFileName)
 		imgIcon.SetBitmap(image.Resize(imgIcon.Width, imgIcon.Height, True)) 'fit on the box
 	Else
 		imgIcon.Height = 0
@@ -194,7 +209,7 @@ Private Sub BottomAndCenter(lbl As Label)
 	
 	
 	'load an positionate icons
-	cmdButton.AddView(imgIcon, ImageStartPoint,Margin, imgIcon.Width, imgIcon.Height)
+	cmdButton.AddView(imgIcon, ImageStartPoint+LeftMargin,Padding, imgIcon.Width, imgIcon.Height)
 	cmdButton.AddView(lblButton,LabelStartPoint, imgIcon.Height+LabelMargin, lblButton.Width,lblButton.Height*2)
 	
 	'ad the button to the base view
@@ -211,13 +226,20 @@ Private Sub CenterAllContent(lbl As Label)
 	cmdButton.Height = mBase.Height
 	cmdButton.Width = mBase.Width
 	
+	
 	'inizialize and load the icon object
+	Dim tempFileName As String
+	If PressedState = False Then
+		tempFileName = ImageFileName
+	Else
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If ImageFileName <> "" Then
-		imgIcon.Height = cmdButton.Height-Margin*2
-		imgIcon.Width = cmdButton.Height-Margin*2
+		imgIcon.Height = cmdButton.Height-Padding*2
+		imgIcon.Width = cmdButton.Height-Padding*2
 		'Dim image As Bitmap = LoadBitmap(File.DirAssets,ImageFileName)
-		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,ImageFileName)
+		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,tempFileName)
 		imgIcon.SetBitmap(image.Resize(imgIcon.Width, imgIcon.Height, True)) 'fit on the box
 	Else
 		imgIcon.Height = 0
@@ -226,20 +248,20 @@ Private Sub CenterAllContent(lbl As Label)
 	
 	'create label
 	lblButton = CreateLabel("lblButton", lbl)
-	lblButton.Height = cmdButton.Height-Margin*2
+	lblButton.Height = cmdButton.Height-Padding*2
 	lblButton.Width = cmdButton.Width-imgIcon.Width-LabelMargin-LeftMargin
 	lblButton.Width = MeasureTextWidth(lblButton.Text, lblButton.Font)'change size to fit string
 	lblButton.SetTextAlignment("CENTER", TextAligment)
 	'lblButton.SetColorAndBorder(objXUI.Color_Green,2dip,objXUI.Color_Red,10dip)
 	
 	'calculate the center startposition
-	Dim ContentSize As Int = imgIcon.Width+Margin+lblButton.Width
+	Dim ContentSize As Int = imgIcon.Width+Padding+lblButton.Width
 	Dim StartPoint As Int = (cmdButton.Width-ContentSize)/2
 	
 	
 	'load an positionate icons
-	cmdButton.AddView(imgIcon,StartPoint,Margin, imgIcon.Width, imgIcon.Height)
-	cmdButton.AddView(lblButton,imgIcon.Left+imgIcon.Width+LabelMargin,Margin,lblButton.Width, lblButton.Height)
+	cmdButton.AddView(imgIcon,StartPoint+LeftMargin,Padding, imgIcon.Width, imgIcon.Height)
+	cmdButton.AddView(lblButton,imgIcon.Left+imgIcon.Width+LabelMargin,Padding,lblButton.Width, lblButton.Height)
 	
 	'ad the button to the base view
 	mBase.AddView(cmdButton,0dip,0dip,mBase.Width,mBase.Height)
@@ -255,12 +277,18 @@ Private Sub LeftAllContent(lbl As Label)
 	cmdButton.Width = mBase.Width
 	
 	'inizialize and load the icon object
+	Dim tempFileName As String
+	If PressedState = False Then
+		tempFileName = ImageFileName
+	Else
+		If PressedFileName <> "" Then tempFileName = PressedFileName Else tempFileName =ImageFileName
+	End If
 	imgIcon = CreateImageView("imgIcon")
 	If ImageFileName <> "" Then
-		imgIcon.Height = cmdButton.Height-Margin*2
-		imgIcon.Width = cmdButton.Height-Margin*2
+		imgIcon.Height = cmdButton.Height-Padding*2
+		imgIcon.Width = cmdButton.Height-Padding*2
 		'Dim image As Bitmap = LoadBitmap(File.DirAssets,ImageFileName)
-		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,ImageFileName)
+		Dim image As B4XBitmap = objXUI.LoadBitmap(File.DirAssets,tempFileName)
 		imgIcon.SetBitmap(image.Resize(imgIcon.Width, imgIcon.Height, True)) 'fit on the box
 	Else
 		imgIcon.Height = 0
@@ -269,14 +297,14 @@ Private Sub LeftAllContent(lbl As Label)
 	
 	'create label
 	lblButton = CreateLabel("lblButton", lbl)
-	lblButton.Height = cmdButton.Height-Margin*2
+	lblButton.Height = cmdButton.Height-Padding*2
 	lblButton.Width = cmdButton.Width-imgIcon.Width-LabelMargin-LeftMargin
 	lblButton.SetTextAlignment("CENTER", TextAligment)
 	'lblButton.SetColorAndBorder(objXUI.Color_Green,2dip,objXUI.Color_Red,10dip)
 	
 	'load an positionate icons
-	cmdButton.AddView(imgIcon,LeftMargin,Margin, imgIcon.Width, imgIcon.Height)
-	cmdButton.AddView(lblButton,imgIcon.Left+imgIcon.Width+LabelMargin,Margin,lblButton.Width, lblButton.Height)
+	cmdButton.AddView(imgIcon,LeftMargin,Padding, imgIcon.Width, imgIcon.Height)
+	cmdButton.AddView(lblButton,imgIcon.Left+imgIcon.Width+LabelMargin,Padding,lblButton.Width, lblButton.Height)
 	
 	'ad the button to the base view
 	mBase.AddView(cmdButton,0dip,0dip,mBase.Width,mBase.Height)
@@ -327,11 +355,12 @@ End Sub
 
 'Loads all properties in to the variables
 Public Sub LoadProps(Props As Map)
-	Margin = Props.Get("Margin")
+	Padding = Props.Get("Padding")
 	LabelMargin = Props.Get("LabelMargin")
 	TextAligment = Props.Get("TextAligment")
 	Aligment = Props.Get("Aligment")
 	ImageFileName = Props.Get("ImageFileName")
+	PressedFileName = Props.Get("PressedFileName")
 	LeftMargin = Props.Get("LeftMargin")
 	PressedColor = Props.Get("PressedColor")
 	BaseColor = Props.Get("BaseColor")
@@ -367,8 +396,12 @@ Private Sub CreateImageView(EventName As String) As B4XView
 End Sub
 
 Private Sub cmdButton_Click
+	PressedState = True
+	PaintControl
 	mBase.Color = objXUI.PaintOrColorToColor(PressedColor)
 	Sleep(PressDelay)
+	PressedState = False
+	PaintControl
 	mBase.Color = objXUI.PaintOrColorToColor(BaseColor)
 	If SubExists(mCallBack,mEventName&"_Click") Then CallSub(mCallBack, mEventName&"_Click")
 End Sub
