@@ -42,7 +42,7 @@ ManifestCode='This code will be applied to the manifest file during compilation.
 Module1=Starter
 Module2=XUIAutoresizeLabel
 Module3=XUIImageButton
-Module4=XUIOptionSwich
+Module4=XUIOptionSwitch
 Module5=XUIToggleImageButton
 NumberOfFiles=17
 NumberOfLibraries=4
@@ -74,7 +74,7 @@ Sub Globals
 	'These variables can only be accessed from this module.
 	'Private Panel1 As Panel
 	Private xui As XUI
-	Private XUIOptionSwich1 As XUIOptionSwich
+	Private XUIOptionSwich1 As XUIOptionSwitch
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
