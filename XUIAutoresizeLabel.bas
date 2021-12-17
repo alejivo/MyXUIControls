@@ -198,6 +198,6 @@ Private Sub CreateLabel(EventName As String, Lbl As Label) As B4XView
 End Sub
 
 'handle the click event
-Private Sub cmdLabel_Click
+Private Sub lblAutoresize_Click
 	If SubExists(mCallBack,mEventName&"_Click") Then CallSub(mCallBack, mEventName&"_Click")
 End Sub

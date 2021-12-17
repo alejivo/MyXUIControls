@@ -4,7 +4,7 @@ ModulesStructureVersion=1
 Type=Class
 Version=9.3
 @EndOfDesignText@
-#Event: Click
+#Event: Click 'deberia ser  SelectedChange(Selected As Boolean)
 #DesignerProperty: Key: Margin, DisplayName: Margin, FieldType: Int, DefaultValue: 1, Description: Space between content and the border.
 #DesignerProperty: Key: LabelMargin, DisplayName: LabelMargin, FieldType: Int, DefaultValue: 10, Description: Space between the image and label
 #DesignerProperty: Key: LeftMargin, DisplayName: Left Margin, FieldType: Int, DefaultValue: 10, Description: Space between the left side, only on LEFT aligment.
@@ -35,9 +35,9 @@ Sub Class_Globals
 	Private cmdButton As B4XView
 	Private mLbl As Label
 	'properties globals
-	Private Margin,LeftMargin, LabelMargin, LineColor, LineThickness As Int
+	Private Margin,LeftMargin, LabelMargin, LineThickness As Int
 	Private PressedFileName, ImageFileName,TextAligment, Aligment  As String
-	Private SelectedTextColor, BaseTextColor, SelectedColor, BaseColor As Object
+	Private SelectedTextColor, BaseTextColor, SelectedColor, BaseColor, LineColor As Object
 	Private PressedState As Boolean = False
 	Private vAutoResize,vDrawLeftLine,vDrawRightLine, vDrawTopLine, vDrawBottomLine As Boolean
 End Sub
